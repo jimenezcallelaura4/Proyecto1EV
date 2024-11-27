@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: bisque;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+.card {
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0 , 0, 0.1);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body{
+    text-align: center;
+}
+
+.select.from-control{
+    max-width: 200px;
+    margin-top: 20px;
+}
+
+button{
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+    .card-img-top {
+        height: 150px;
+    }
+
+    .col-md-4{
+        max-width: 100%;
+    }
+}

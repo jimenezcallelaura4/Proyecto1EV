@@ -1,0 +1,82 @@
+
+<template>
+    <div class="container mt-4">
+        <h1>Countries</h1>
+        
+        <!-- fILTRO REGION-->
+        <RegionFilter @filter-region="filterByRegion" />
+
+
+        <!-- Buscador local-->
+        <div class="mb-4">
+            <input
+            type="text"
+            v-model="searchQuery"
+            class="form-control"
+            placeholder="Search a country"
+            />
+        </div>
+        <div class="row">
+            <CountryCard v-for="country in paginatedCountires" :key="country.cca3" :country="country"/> 
+        </div>
+        <button v-if="!allCountriesLoaded" class="btn btn-primary mt-3" @click="loadMore">Load More</button>
+    </div>
+</template>
+
+<script setup>
+import { ref, onMounted, computed } from 'vue';
+import CountryCard from '../components/CountryCard.vue';
+import RegionFilter from '../components/RegionFilter.vue';
+
+
+const countries = ref ([]);
+const page = ref(1);
+const perPage = 20;
+const searchQuery = ref('');
+const selectedRegion = ref ('');
+
+
+const fetchCountries = async () => {
+    try {
+        const response = await fetch('https://restcountries.com/v3.1/all');
+        const data = await response.json ();
+        countries.value = data;
+        console.log(data);
+        console.log(countries.value); // Esto te permitirá verificar los datos en la consola.
+    } catch (error) {
+    console.error('Error fetching countries:', error);
+    }
+};
+
+const paginatedCountires = computed(() =>
+    countries.value.slice(0, page.value * perPage)
+);
+
+//filto paises nombre region
+const filteredCountried = computed(() => {
+    let filtered = paginatedCountires.value;
+
+    if (searchQuery.value) {
+        filtered = filtered.filter(country =>
+            country.name.common.toLowerCase().includes(searchQuery.value.toLowerCase()) || 
+            country.region.toLowerCase().includes(searchQuery.value.toLowerCase())
+        );
+    }
+    if (selectedRegion.value) {
+        filtered = filtered.filter(country =>
+        country.region.toLowerCase() === selectedRegion.value.toLowerCase()
+        );
+    }
+    return filtered;
+});
+
+const loadMore = () => {
+    page.value++;
+}
+
+const allCountriesLoaded = computed(() =>   
+    countries.value.length <= page.value * perPage
+);
+
+onMounted(fetchCountries);
+</script>
