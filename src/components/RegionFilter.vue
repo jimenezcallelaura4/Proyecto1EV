@@ -1,12 +1,16 @@
 <template>
-    <div class="mb-4">
-        <select v-model="selectedRegion" @change="filterByRegion" class="form-control">
-            <option value="">Select Region</option>
-            <option value="Africa">Africa</option>
-            <option value="Amercias">Amercias</option>
-            <option value="Asia">Asia</option>
-            <option value="Europe">Europe</option>
-            <option value="Oceania">Oceania</option>
+    <div class="mb-3">
+        <label for="region-select" class="form-label">Filtrar por Región</label>
+        <select
+            id="region-select"
+            class="form-select"
+            @change="emitRegion"
+            v-model="selectedRegion"
+            >
+            <option value="">Todas las Regiones</option>
+            <option v-for="region in regions" 
+                    :key="region" 
+                    :value="region">{{ region }}</option>
         </select>
     </div>
 </template>
@@ -14,12 +18,13 @@
 <script setup> 
 import { ref } from 'vue';
 
-const selectedRegion = ref('');
+const regions = [ 'Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
+const selectedRegion = ref(''); // region seleccionada
 
-const emit = defineEmits(['filter-region']);
-
-
-const filterByRegion = () => {
+const emit = defineEmits(['filter-region'])
+const emitRegion = () => {
+    console.log('Selected region:', selectedRegion.value);
     emit('filter-region', selectedRegion.value);
 };
+
 </script>
