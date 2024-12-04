@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: bisque;
+    background-color: #e5f8f8;
 }
 
 .container {
@@ -16,7 +16,7 @@ body {
 .card-img-top {
     width: 100%;
     height: 200px;
-    object-fit: contain;
+    object-fit: cover;
     border-bottom: 1px solid #ddd;
 }
 
@@ -59,16 +59,50 @@ button{
     }
 }
 
-.navbar {
-    background-color: #f8f9fa;
-}
-
-.navbar .from-control {
-    width: 200px;
-}
-
 @media (max-width: 768px) {
     .navbar .from-control {
         width: 100%;
     }
+}
+
+.country-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; // Centrar verticalmente ocupando toda la altura
+    text-align: center;
+    background-color: #ffe4c4;
+    padding: 20px;
+    border-radius: 10px;
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    color: #333;
+}
+
+img {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 10px;
+
+    strong {
+    color: #333;
+    }
+}
+
+.btn {
+    margin-bottom: 20px;
+}
 }

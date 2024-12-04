@@ -7,12 +7,17 @@
             <div class="card-body">
                 <h5 class="card-title">{{ country.name.common }}</h5>
                 <p class="card-text">Region: {{ country.region }}</p>
-                <router-link :to="'/country/${country.cca3}'" class="btn btn-primary">View Details</router-link>
+                <router-link :to="`/country/${country.cca3}`" class="btn btn-primary">Ver Detalles</router-link>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-defineProps(['country']);
+defineProps({
+    country: {
+        type: Object,
+        required: true,
+    },
+});
 </script>

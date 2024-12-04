@@ -5,8 +5,15 @@ import CountryDetails from './pages/CountryDetails.vue';
 
 
 const routes = [
-    { path: '/', name: 'Home', component: Home},
-    { path: '/country/:code', name: 'CountryDetails', component:  CountryDetails},
+    { 
+        path: '/', 
+        name: 'Home', 
+        component: Home
+    },
+    { 
+        path: '/country/:code', 
+        name: 'CountryDetails', 
+        component: CountryDetails},
 ];
 
 const router = createRouter({

@@ -1,94 +1,100 @@
 
 <template>
-    <div class="container mt-4">
-        <h1>Countries</h1>
-        
-        <!-- fILTRO REGION-->
-        <RegionFilter @filter-region="updateSelectedRegion" />
+    <div class="container my-4">
 
-
-        <!-- Buscador local-->
-        <div class="mb-4">
-            <input
-            type="text"
-            v-model="searchQuery"
-            class="form-control"
-            placeholder="Search a country"
-            />
+        <div class="row filter-section">
+            <div class="col-md-6">
+                <label for="regionFilter" class="form-label"> Filtrar por Región</label>
+                <select id="regionFilter"
+                        class="form-select"
+                        v-model="regionFilter"
+                        @change="filterCoutries">
+                        <option value="">Todas las regiones</option>
+                        <option v-for="region in regions"
+                                :key="region"
+                                :value="region">
+                                {{ region }}
+                        </option>
+                </select>
+            </div>
+            <div class="row country-list">
+                <div class="col-md-6">
+                    <label for="countrySearch" class="form-label">Buscar país</label>
+                    <input id="countrySearch"
+                    type="text"
+                    class="form-control"
+                    placeholder="Escribe un país"
+                    v-model="searchQuery"
+                    @input="filterCountries"/>
+                </div>
+            </div>
         </div>
 
-        <!-- Listta paises-->
-        <div class="row">
-            <CountryCard v-for="country in filteredCountried" 
-            :key="country.cca3" 
-            :country="country"/> 
+        <!-- list paises-->
+        <div class="row mt-4">
+            <CountryCard
+                v-for="(country, index) in paginatedCountries"
+                :key="country.name.common"
+                :country="country"/>
         </div>
-        <button v-if="!allCountriesLoaded" 
-        class="btn btn-primary mt-3" 
-        @click="loadMore">Cargar Más</button>
+
+        <!--paginacion-->
+        <div class="text-center mt-4">
+            <button 
+                class="btn btn-primary"
+                v-if="paginatedCountries.length < filteredCountries.length"
+                @click="CargarMas"
+                >Carga Más 
+            </button>
+        </div>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import CountryCard from '../components/CountryCard.vue';
-import RegionFilter from '../components/RegionFilter.vue';
+import { ref, computed } from "vue";
+import CountryCard from "@/components/CountryCard.vue"
 
-// Variables reactivas
+//variables reactivas
 const countries = ref ([]);
-const page = ref(1);
-const perPage = 20;
-const searchQuery = ref('');
-const selectedRegion = ref ('');
+const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania", "Antarctic"];
+const regionFilter = ref ("");
+const searchQuery = ref ("");
+const itemsPerPage = ref(6);
 
-//Obtener paises
-const fetchCountries = async () => {
-    try {
-        const response = await fetch('https://restcountries.com/v3.1/all');
-        const data = await response.json ();
-        countries.value = data;
-    } catch (error) {
-        console.error('Error fetching countries:', error);
-    }
-};
-
-//actualizar region que se elige en el filtro
-const updateSelectedRegion = (region) => {
-    console.log('Region received in Home:', region);
-    selectedRegion.value = region;
-};
+//filtro y busq
+const filteredCountries = computed(() =>
+    countries.value.filter((country) => {
+        const matchesRegion = 
+        !regionFilter.value || country.region === regionFilter.value;
+        const matchesSearch =
+        !searchQuery.value || country.name.common.toLowerCase().includes(searchQuery.value.toLowerCase());
+        return matchesRegion && matchesSearch;
+    })
+);
 
 //paginacion
-const paginatedCountires = computed(() =>
-    countries.value.slice(0, page.value * perPage)
+const paginatedCountries = computed (() =>
+    filteredCountries.value.slice(0, itemsPerPage.value)
 );
 
-//filto paises nombre + region
-const filteredCountried = computed(() => {
-    let filtered = paginatedCountires.value;
-
-    if (searchQuery.value) {
-        filtered = filtered.filter(country =>
-            country.name.common.toLowerCase().includes(searchQuery.value.toLowerCase()) 
-        );
-    }
-    if (selectedRegion.value) {
-        filtered = filtered.filter(country =>
-            country.region.toLowerCase() === selectedRegion.value.toLowerCase()
-        );
-    }
-    return filtered; //pag
-});
-
-// mas paises
-const loadMore = () => {
-    page.value++;
+//cargar mas
+const CargarMas = () => {
+    itemsPerPage.value += 6 ; //se suman de 10 en 10 
 }
 
-//verifica que ya se cargaron los paises
-const allCountriesLoaded = computed(() =>   
-    countries.value.length <= page.value * perPage
-);
+//datos api
+const fetchCountries = async () => {
+    const response = await fetch("https://restcountries.com/v3.1/all");
+    countries.value = await response.json();
+};
 
-onMounted(fetchCountries);
+fetchCountries();
+
+// Función de filtro (opcional si prefieres no usar computed directamente)
+const filterCountries = () => {};
+
 </script>
+
+<style scoped>
+@import "../assets/styles.scss"
+</style>

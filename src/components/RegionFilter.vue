@@ -18,7 +18,7 @@
 <script setup> 
 import { ref } from 'vue';
 
-const regions = [ 'Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
+const regions = [ 'Africa', 'Americas', 'Asia', 'Europe', 'Oceania', 'Antarctic'];
 const selectedRegion = ref(''); // region seleccionada
 
 const emit = defineEmits(['filter-region'])
