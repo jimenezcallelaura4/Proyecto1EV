@@ -1,6 +1,21 @@
+// sass
+$font-family: Arial, sans-serif;
+$background-color: #e5f8f8;
+$card-shadow: 0 2px 5px rgba(0, 0 , 0, 0.1);
+$btn-bg: #cdcdcd;
+$btn-hover-bg: #c2c2c2; 
+$border-radius: 10px;
+$card-padding: 15px;
+$btn-padding: 10px 20px;
+$card-title-color: #333;
+$card-text-color: #555;
+$btn-radius: 5px;
+$img-border: 2px solid #ccc;
+
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #e5f8f8;
+    font-family: $font-family;
+    background-color: $background-color;
 }
 
 .container {
@@ -9,20 +24,21 @@ body {
 
 .card {
     width: 100%;
-    box-shadow: 0 2px 5px rgba(0, 0 , 0, 0.1);
-    border-radius: 10px;
-}
+    box-shadow: $card-shadow;
+    border-radius: $border-radius;
 
-.card-img-top {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-bottom: 1px solid #ddd;
-}
 
-.card-body{
-    text-align: center;
-    padding: 15px;
+    &-img-top {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-bottom: 1px solid #ddd;
+    }
+
+    &-body{
+        text-align: center;
+        padding: $card-padding;
+    }
 }
 
 .row {
@@ -37,15 +53,18 @@ body {
     max-width: 30%;
 }
 
-.select.from-control{
-    max-width: 200px;
-    margin-top: 20px;
-}
+.btn {
+    background-color: $btn-bg; 
+    padding: $btn-padding;
+    border-radius: $border-radius;
+    border: none;
+    color: #333;
 
-button{
-    display: block;
-    width: 100%;
-    margin-top: 20px;
+    &:hover {
+        background-color: $btn-hover-bg;
+        color: #333;
+    }
+
 }
 
 /* responsive */
@@ -57,52 +76,126 @@ button{
     .col-md-4{
         max-width: 100%;
     }
-}
-
-@media (max-width: 768px) {
-    .navbar .from-control {
+    .navbar .form-control {
         width: 100%;
     }
 }
 
-.country-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; // Centrar verticalmente ocupando toda la altura
-    text-align: center;
-    background-color: #ffe4c4;
-    padding: 20px;
-    border-radius: 10px;
+@media (max-width: 576px) {
+    .row {
+        flex-direction: column;
+    }
 
-h1 {
-    margin-bottom: 20px;
-    font-size: 2.5rem;
-    color: #333;
-}
-
-img {
-    max-width: 300px;
-    width: 100%;
-    height: auto;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    align-items: center;
-}
-
-p {
-    font-size: 1.2rem;
-    color: #555;
-    margin-bottom: 10px;
-
-    strong {
-    color: #333;
+    .card-img-top {
+        height: 120px;
     }
 }
 
-.btn {
-    margin-bottom: 20px;
+// country card
+.country-details {
+    display: flex;
+    justify-content: center; 
+    align-items: center;  
+    height: 100vh; 
+    background-color: $background-color; 
+    padding: 3rem; 
+
+    .card {
+        display: flex;
+        flex-direction: column; 
+        align-items: center;   
+        background-color: white;
+        padding: $card-padding;
+        border-radius: $border-radius;
+        box-shadow: $card-shadow;
+        text-align: center;
+    
+            img {
+                max-width: 300px;
+                height: auto;
+                border: $img-border;
+                border-radius: $border-radius;
+                margin-bottom: 1rem; 
+            }
+        
+            .card-title {
+                font-size: 1.5rem;
+                color: $card-title-color;
+                margin-bottom: 0.5rem;
+            }
+        
+            p {
+                font-size: 1.2rem;
+                color: $card-text-color;
+                margin-bottom: 0.5rem;
+        
+                strong {
+                color: $card-title-color;
+                }
+            }
+        
+            .btn {
+                margin-top: 1rem;
+                padding: $btn-padding;
+                background-color: $btn-bg;
+                color: white;
+                border: none;
+                border-radius: $btn-radius;
+                text-decoration: none;
+                cursor: pointer;
+        
+                &:hover {
+                background-color: $btn-hover-bg;
+                }
+            }
+        }
+    }
+
+//lenguaje
+.language-search, .currency-search, .capital-search, .subregion-search{
+    text-align: center;
+
+    h2 {
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+        color: $card-title-color;
+    }
+
+    .form-label {
+        font-weight: bold;
+    }
+    
+    .btn-primary {
+        background-color: $btn-bg;
+        border-color: none;
+        
+        &:hover {
+            background-color: $btn-hover-bg;
+            }
+    }
+
+    .mt-4 {
+        margin-top: 1.5rem;
+    }
 }
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
 }
+
+@media (max-width:768px) {
+    .country-details {
+        padding: 1.5rem;
+
+        .card img {
+            max-width: 200px;
+        }
+        .button-group {
+            flex-direction: column;
+            gap: 10px; // Reduce el espacio en pantallas pequeñas
+        }
+    }
+}
+    
