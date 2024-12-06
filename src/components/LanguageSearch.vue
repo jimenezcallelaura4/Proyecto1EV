@@ -15,20 +15,39 @@
 
         <div v-if="countries.length" class="mt-4">
             <h3>Resultados:</h3>
-            <div class="row">
-                <CountryCard v-for="country in countries"
-                                :key="country.name.common"
-                                :country="country"/>
+            <Splide
+            :options="{
+                type: 'loop',
+                perPage: 3,
+                gap: '20px',
+                breakpoints: {
+                    1024: { perPage: 3, gap: '1rem' },
+                    768: { perPage: 2, gap: '0.75rem' },
+                    576: { perPage: 1, gap: '0.5rem' },
+                }
+            }"  
+        >
+        <SplideSlide v-for="(country, index) in countries" :key="index">
+            <div class="card">
+                <img :src="country.flags.svg" alt="Bandera" class="card-img-top" />
+                <div class="card-body">
+                    <h5 class="card-title">{{ country.name.common }}</h5>
+                    <p class="card-text">Región: {{ country.region }}</p>
+                    <router-link :to="`/country/${country.cca3}`" class="btn btn-primary">Ver Detalles</router-link>
+                </div>
             </div>
-        </div>
-
-        <p v-else-if="searched && !countries.length" class="mt-4">No se encontraron países para el idioma seleccionado</p>
+        </SplideSlide>
+    </Splide>
+    </div>
+    <p v-else-if="searched && !countries.length" class="mt-4">No se encontraron países para el idioma seleccionado</p>
     </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import CountryCard from "@/components/CountryCard.vue";
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
+import '@splidejs/splide/dist/css/splide.min.css';
+
 
 const language = ref("");
 const countries = ref([]);

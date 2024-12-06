@@ -1,8 +1,7 @@
 <template>
   <div>
-    <Navbar /> 
-    <router-view /> <
-    <Footer /> 
+    <h1>Países, Regiones, Idiomas y mucho más !</h1>
+    <router-view />  
   </div>
 </template>
 
@@ -11,8 +10,4 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 </script>
 
 <style>
-
-main {
-  padding: 20px;
-}
 </style>
