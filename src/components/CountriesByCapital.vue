@@ -50,7 +50,6 @@ import CountryCard from "./CountryCard.vue";
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 import '@splidejs/splide/dist/css/splide.min.css';
 
-const currency = ref("");
 const countries = ref([]);
 const searched = ref(false);
 

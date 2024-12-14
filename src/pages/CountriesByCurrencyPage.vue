@@ -11,3 +11,17 @@ import CountriesByCurrency from '@/components/CountriesByCurrency.vue';
 <style scoped>
 @import "../assets/styles.scss";
 </style>
+
+
+
+<!--
+"Pound" (Libras)
+"Euro
+"Dollar
+"Yen
+"dinar
+"Franc (franco)
+"leone
+"forint
+"rupiah
+-->
